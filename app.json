@@ -1,0 +1,7 @@
+{
+  "name": "Kickstarter Assistant",
+  "description": "Track Kickstarter project funding and comments.",
+  "repository": "https://github.com/heroku/node-js-sample (CHANGE ME)",
+  "logo": "https://node-js-sample.herokuapp.com/node.svg (CHANGE ME)",
+  "keywords": ["node", "kickstarter", "bot", "track", "comments"]
+}
