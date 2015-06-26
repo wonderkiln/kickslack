@@ -6,11 +6,11 @@ var fs              = require('fs');
 var Entities        = require('html-entities').AllHtmlEntities;
 var html            = new Entities();
 var Slack           = require('node-slack');
-var slack           = new Slack(process.env.SLACK_WEBHOOK_URL || '***REMOVED***');
+var slack           = new Slack(process.env.SLACK_WEBHOOK_URL);
 var track           = [];
 var track_max       = 2;
 var track_interval  = 15 * 60000;
-var kickstarter_url = process.env.KICKSTARTER_URL || '***REMOVED***';
+var kickstarter_url = process.env.KICKSTARTER_URL;
 
 function to_spaces (body) {
 	var ret = body.split('\n').join(' ');
