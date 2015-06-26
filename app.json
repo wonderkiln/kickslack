@@ -1,7 +1,0 @@
-{
-  "name": "Kickslack",
-  "description": "Track Kickstarter project funding and comments, pipe to slack.",
-  "repository": "https://github.com/InkhornGames/Kickslack",
-  "logo": "http://inkhorn.co/favicon.ico",
-  "keywords": ["node", "kickstarter", "bot", "track", "comments"]
-}

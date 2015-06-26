@@ -1,13 +1,16 @@
-var request        = require('request');
-var fs             = require('fs');
-var Entities       = require('html-entities').AllHtmlEntities;
-var html           = new Entities();
-var Slack          = require('node-slack');
-var slack          = new Slack('***REMOVED***');
-var track          = [];
-var track_max      = 2;
-var track_interval = 1 * 60000;
-
+var port            = process.env.PORT || 80;
+var express         = require('express');
+var app             = express();
+var request         = require('request');
+var fs              = require('fs');
+var Entities        = require('html-entities').AllHtmlEntities;
+var html            = new Entities();
+var Slack           = require('node-slack');
+var slack           = new Slack(process.env.SLACK_WEBHOOK_URL || '***REMOVED***');
+var track           = [];
+var track_max       = 2;
+var track_interval  = 1 * 60000;
+var kickstarter_url = process.env.KICKSTARTER_URL || '***REMOVED***';
 
 function to_spaces (body) {
 	var ret = body.split('\n').join(' ');
@@ -192,7 +195,7 @@ function get_new_comments (previous, current) {
 };
 
 function do_track () {
-	request.get('***REMOVED***?ref=category_featured', function (err, res, body) {
+	request.get(kickstarter_url, function (err, res, body) {
 		var ret = {
 			title:             get_title(body),
 			short_description: get_short_description(body),
@@ -204,7 +207,7 @@ function do_track () {
 			end_date:          get_end_date(body),
 			hours_remaining:   get_hours_remaining(body),
 		};
-		request.get('***REMOVED***/comments', function (err, res, body) {
+		request.get(kickstarter_url + '/comments', function (err, res, body) {
 			ret.comments = get_comments(body);
 			track.push(ret);
 			if (track.length > track_max) {
@@ -214,12 +217,24 @@ function do_track () {
 				track[0].comments.shift();
 			}
 			var new_comments = get_new_comments((track[track.length - 2] || null), ret);
-			console.log(new_comments);
-			fs.writeFileSync('debug.json', JSON.stringify(ret, null, '  '), 'utf-8');
+			for (var new_comment_idx = 0; new_comment_idx < new_comments.length; new_comment_idx++) {
+				var new_comment = new_comments[new_comment_idx];
+				slack.send({
+				    text:     '*' + new_comment.name + '*:\n' + new_comment.text + '\n\n_' + new_comment.ago + '_\n' + new_comment.comment_url,
+				    username: 'Kickslack'
+				});
+			}
 		});
 	});
 };
 
 setInterval(do_track, track_interval);
-
 do_track();
+
+// Heroku requires binding to a port
+app.get('/', function (req, res) {
+    res.send('<3');
+    res.end();
+});
+app.listen(port);
+console.log('up!');
