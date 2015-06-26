@@ -9,7 +9,7 @@ var Slack           = require('node-slack');
 var slack           = new Slack(process.env.SLACK_WEBHOOK_URL || '***REMOVED***');
 var track           = [];
 var track_max       = 2;
-var track_interval  = 1 * 60000;
+var track_interval  = 15 * 60000;
 var kickstarter_url = process.env.KICKSTARTER_URL || '***REMOVED***';
 
 function to_spaces (body) {
@@ -156,7 +156,6 @@ function get_comments (body) {
 	try {
 		var ret = body.split('<div class="main clearfix pl2 ml2">');
 		ret.splice(0, 1);
-		fs.writeFileSync('ret.json', JSON.stringify(ret, null, '  '));
 		for (var r = 0; r < ret.length; r++) {
 			var body = ret[r];
 			ret[r] = {
@@ -213,14 +212,11 @@ function do_track () {
 			if (track.length > track_max) {
 				track.shift();
 			};
-			if (track.length == 2) {
-				track[0].comments.shift();
-			}
 			var new_comments = get_new_comments((track[track.length - 2] || null), ret);
 			for (var new_comment_idx = 0; new_comment_idx < new_comments.length; new_comment_idx++) {
 				var new_comment = new_comments[new_comment_idx];
 				slack.send({
-				    text:     '*' + new_comment.name + '*:\n' + new_comment.text + '\n\n_' + new_comment.ago + '_\n' + new_comment.comment_url,
+				    text:     '*' + new_comment.name + '*:\n```\n' + new_comment.text + '```\n_' + new_comment.ago + '_\n' + new_comment.comment_url,
 				    username: 'Kickslack'
 				});
 			}
