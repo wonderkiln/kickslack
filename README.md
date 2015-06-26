@@ -1,6 +1,6 @@
 # Kickslack
 
-Kickslack is designed to monitor a given Kickstarter project, and to deliver all new comments and funding to your Slack #kickstarter channel. **The provided configuration will check for updates every 15 minutes.**
+Kickslack is designed to monitor a given Kickstarter project, and to deliver all new comments and funding updates to your Slack #kickstarter channel. **The provided configuration will check for updates every 15 minutes.**
 
 ## Set It and Forget it
 
