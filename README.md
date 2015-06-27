@@ -12,3 +12,9 @@ Kickslack is designed to monitor a given Kickstarter project, and to deliver all
         SLACK_WEBHOOK_URL
 
 3. New messages and funding updates will be delivered to the #kickstarter channel.
+
+## Brought to you by [Inkhorn Games](http://inkhorn.co)
+Developed for our upcoming title Battle Brigades ([subreddit](http://www.reddit.com/r/battlebrigades)).
+
+Connect with us:
+[Facebook](https://www.facebook.com/inkhorngames) | [Twitter](https://twitter.com/inkhorngames) | [Youtube](http://youtube.com/inkhorncompany)
