@@ -1,13 +1,13 @@
 {
-  "name": "ks",
+  "name": "kickslack",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "description": "Monitor a given Kickstarter project, and to deliver all new comments and funding updates to your Slack #kickstarter channel. ",
+  "main": "app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "Adrian Seeley <consult@osci.international> (http://osci.international)",
-  "license": "ISC",
+  "author": "Inkhorn Games",
+  "license": "MIT",
   "dependencies": {
     "express": "^4.13.0",
     "html-entities": "^1.1.2",
